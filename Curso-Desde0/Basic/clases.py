@@ -1,7 +1,5 @@
-# Clases
+### Clases ###
 import string
-
-
 class Person:
     # Para las clases los nombres van en CamelCase
     # Para las variables, nombres de funciones y demas los nombres van en snake_case

@@ -1,4 +1,4 @@
-# Funciones
+### Funciones ###
 import string
 
 # Definimos una funcion que no retorna nada
