@@ -67,7 +67,6 @@ print(list(filter(lambda number: number >= 5, numbers)))
 print(numbers)
 
 # Reduce: opera entre los valores que va recorriendo
-
 def sum_two_values(first_value, second_value):
     print("First value: ", first_value)
     print("Second value: ", second_value)
