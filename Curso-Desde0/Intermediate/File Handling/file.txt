@@ -1,7 +1,7 @@
-Mi nombre es Antonella.
-Mi apellido es Bevilacqua.
-Tengo 25 aÃ±os.
-Soy de Buenos Aires, Argentina.
-Tengo 2 perritas llamadas Uma y Morita.
+Mi nombre es Antonella
+Mi apellido es Bevilacqua
+Tengo 25 anios
+Soy de Buenos Aires, Argentina
+Tengo 2 perritas llamadas Uma y Morita
 Quiero ser desarrolladora Backend!
-Y tambien me gustaría tener una cafeteria algun dia.
+Y tambien me gustaría tener una cafeteria algun dia..
