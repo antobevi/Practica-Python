@@ -75,5 +75,21 @@ print(re.findall(pattern, un_string))
 pattern = r"[eE]." # Busca las coincidencias con la letra e y las devuelve con el caracter que esta a continuacion
 print(re.findall(pattern, un_string))
 
-pattern = r"[eE].*"
+pattern = r"[Ee].*"
 print(re.findall(pattern, un_string))
+
+def is_valid_email(email):
+    # ^ nos indica "Empieza por", que en este caso puede ser una letra, un numero, un _, un ., un + o un -
+    pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    return re.match(pattern, email)
+
+print(is_valid_email("antonellabevilacqua.b@gmail.com"))
+print(is_valid_email("antonellabevilacqua.b@hotmail")) # Como no es valido, retorna None
+print(is_valid_email("antonellabevilacqua.b@gmail.com.ar")) # Funciona ya que la regex tiene un $ al final (tiene en cuenta lo que va dsp)
+
+pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+one_string = "antonellabevilacqua.b@gmail.com"
+star, end = is_valid_email("antonellabevilacqua.b@gmail.com").span()
+print(one_string[star:end])
+
+print(re.findall(pattern, "antonellabevilacqua.b@gmail.com"))
