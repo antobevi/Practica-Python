@@ -34,7 +34,7 @@ class User:
         return self.web_page_url
 """
 # BaseModel nos brinca la capacidad de crear una entidad y la tratemos de diferentes formas, entonces, podemos crear la
-# entidad si hacer lo de antes y agregar el constructor y demas..
+# entidad sin hacer lo de antes y agregar el constructor y demas..
 class User(BaseModel): # User hereda un comportamiento de BaseModel
     id: int
     name: str
