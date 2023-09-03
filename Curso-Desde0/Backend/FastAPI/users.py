@@ -1,4 +1,5 @@
 import fastapi
+from fastapi import HTTPException
 from pydantic import BaseModel
 
 # Creacion de una API simple para usuarios generales
@@ -72,13 +73,15 @@ async def get_another_specific_user(id: int):
     return search_user(id)
 
 # POST
-@app.post("/users/")
+@app.post("/users/", response_model=User, status_code=201) # response_model sirve para la documentacion, saber que se espera que retorne
 async def new_user(user: User):
     if type(search_user(user.id)) == User:
-        return {"error": "El usuario ya existe!"}
+        raise HTTPException(status_code=409, detail="El usuario ya existe!") # propaga la excepción
+        #return HTTPException(status_code=204, detail="El usuario ya existe!")
+        #return {"error": "El usuario ya existe!"}
     else:
         users.append(user)
-        return {"result": "Usuario agregado con exito!"}
+        return user
 
 # PUT
 # Actualizaremos un usuario completo, aunque solo queramo actualizar la url de su pagina web, por ejemplo.
