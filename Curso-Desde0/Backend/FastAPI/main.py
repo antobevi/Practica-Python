@@ -28,3 +28,17 @@ async def get_google_URL():
 # PUT (actualiza un bloque completo. Por ejemplo, pasamos el usuario completo para que lo actualice)
 # PATCH (actualiza una parte de un bloque, no completo. Por ejemplo, del usuario solo pasamos el nuevo email)
 # DELETE
+
+### Routers ###
+# Enrutamiento
+# Desde el main necesitamos la referencia a las rutas de users y productos. Tanto main, como users y products
+# conforman una API general que estamos creando, pero para manejarlo todo desde un lugar necesitamos crear un Router
+# Esto nos va a permitir lanzar un unico servidor y aun asi acceder a todas las "apis" que tengamos como users y products.
+# Entonces, importamos el Router que creamos:
+
+from Routers import products
+from Routers import users
+
+# Routers
+app.include_router(products.router) # Router de productos
+app.include_router(users.router) # Router de users

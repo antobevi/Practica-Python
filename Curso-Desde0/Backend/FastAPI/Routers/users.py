@@ -1,10 +1,14 @@
 import fastapi
 from fastapi import HTTPException
 from pydantic import BaseModel
+from fastapi import APIRouter
 
 # Creacion de una API simple para usuarios generales
 
-app = fastapi.FastAPI()
+app = fastapi.FastAPI() # Cambiamos el app por el Router
+
+# Router
+router = APIRouter()
 
 # Para iniciar el servidor: uvicorn users:app --reload
 
@@ -49,7 +53,7 @@ users = [User(id = 1, name = "Antonella", surname = "Bevilacqua", age = 25, web_
          User(id = 3, name = "Uma", surname = "Bevilacqua", age = 12, web_page_url = "No Page Found")]
 
 # GET
-@app.get("/users")
+@router.get("/users")
 async def get_users():
     return users
 
@@ -62,30 +66,30 @@ def search_user(id: int):
 # Si nos piden un usuario en particular:
 # Path
 # Por ejemplo: /users/1
-@app.get("/users/{id}")
+@router.get("/users/{id}")
 async def get_specific_user(id: int):
     return search_user(id)
 
 # Query
 # Por ejemplo: /users/?id=1&name="Antonella"
-@app.get("/users/")
+@router.get("/users/")
 async def get_another_specific_user(id: int):
     return search_user(id)
 
 # POST
-@app.post("/users/", response_model=User, status_code=201) # response_model sirve para la documentacion, saber que se espera que retorne
+@router.post("/users/", response_model=User, status_code=201) # response_model sirve para la documentacion, saber que se espera que retorne
 async def new_user(user: User):
     if type(search_user(user.id)) == User:
         raise HTTPException(status_code=409, detail="El usuario ya existe!") # propaga la excepción
         #return HTTPException(status_code=204, detail="El usuario ya existe!")
         #return {"error": "El usuario ya existe!"}
     else:
-        users.append(user)
+        users.routerend(user)
         return user
 
 # PUT
 # Actualizaremos un usuario completo, aunque solo queramo actualizar la url de su pagina web, por ejemplo.
-@app.put("/users/")
+@router.put("/users/")
 async def update_user(user: User):
     if type(search_user(user.id)) != User:
         return {"error": "El usuario no existe!"}
@@ -99,7 +103,7 @@ async def update_user(user: User):
 un elemento del objeto que recibe y un índice que indica su posición"""
 
 # DELETE
-@app.delete("/users/{id}")
+@router.delete("/users/{id}")
 async def delete_user(id: int):
     if type(search_user(id)) == User:
         for index, saved_user in enumerate(users):
