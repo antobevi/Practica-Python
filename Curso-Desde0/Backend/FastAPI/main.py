@@ -34,11 +34,16 @@ async def get_google_URL():
 # Desde el main necesitamos la referencia a las rutas de users y productos. Tanto main, como users y products
 # conforman una API general que estamos creando, pero para manejarlo todo desde un lugar necesitamos crear un Router
 # Esto nos va a permitir lanzar un unico servidor y aun asi acceder a todas las "apis" que tengamos como users y products.
-# Entonces, importamos el Router que creamos:
+# Entonces, importam os el Router que creamos:
 
 from Routers import products
 from Routers import users
+from fastapi.staticfiles import StaticFiles
 
 # Routers
 app.include_router(products.router) # Router de productos
 app.include_router(users.router) # Router de users
+
+# Exponer recursos estaticos
+# /Static/Images
+app.mount("/static", StaticFiles(directory="Static"), name="static") # Montar (Donde se expone, Aplicacion o Tipo de directorio a exponer, nombre que le quiero dar)
