@@ -1,11 +1,11 @@
-import fastapi
+from fastapi import FastAPI
 from fastapi import HTTPException
 from pydantic import BaseModel
 from fastapi import APIRouter
 
 # Creacion de una API simple para usuarios generales
 
-app = fastapi.FastAPI() # Cambiamos el app por el Router
+app = FastAPI() # Cambiamos el app por el Router
 
 # Router
 router = APIRouter()
