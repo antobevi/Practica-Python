@@ -36,14 +36,17 @@ async def get_google_URL():
 # Esto nos va a permitir lanzar un unico servidor y aun asi acceder a todas las "apis" que tengamos como users y products.
 # Entonces, importam os el Router que creamos:
 
-from Routers import products
-from Routers import users
+from Routers import products, users, basic_auth_users, jwt_auth_users
 from fastapi.staticfiles import StaticFiles
 
 # Routers
 app.include_router(products.router) # Router de productos
 app.include_router(users.router) # Router de users
+#app.include_router(basic_auth_users.router)
+app.include_router(jwt_auth_users.router)
 
 # Exponer recursos estaticos
 # /Static/Images
 app.mount("/static", StaticFiles(directory="Static"), name="static") # Montar (Donde se expone, Aplicacion o Tipo de directorio a exponer, nombre que le quiero dar)
+
+# uvicorn nombreArchivo:nombreAPI --reload 

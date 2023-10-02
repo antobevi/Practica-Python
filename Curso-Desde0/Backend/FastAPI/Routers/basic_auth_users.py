@@ -1,13 +1,13 @@
 # Autorizacion OAuth2 (OAuth es un estandar)
 # Autorizacion y Autenticacion basica para la API de users
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 # OAuth2PasswordBearer es la clase que se encarga de gestionar la autenticacion (con el usuario y la contraseña)
 # OAuth2PasswordRequestForm es la forma en que se envia a nuestro backend (API) los criterios de autenticacion
 # y de esta forma al capturar el usuario y contraseña podra confirmar si el usuario pertenece al sistema
 
-app = FastAPI()
+router = APIRouter()
 
 # Creamos una instancia del sistema de autenticacion
 oauth2 = OAuth2PasswordBearer(tokenUrl="login") # url que se encarga de gestionar la autenticacion
@@ -50,7 +50,7 @@ users_db = {"antobevi": {"name": "Antonella",
 def search_user_db(username: str):
     if username in users_db:
         return UserDB(**users_db[username]) # porque users_db es un diccionario clave usuario valor atributos usuario
-        # NOTA: Los ** sirven, en este caso, pasar como argumento un diccionario usando como claves los nombres de los parámetros
+        # NOTA: Los ** sirven, en este caso,para pasar como argumento un diccionario usando como claves los nombres de los parámetros
         # Mas info: https://j2logo.com/args-y-kwargs-en-python/
 
 def search_user(username: str): # De esta forma al retornarlo no mostramos la contraseña
@@ -74,7 +74,7 @@ async def current_user(token: str = Depends(oauth2)):
     return user
     
 # Implementamos la operacion de autenticacion
-@app.post("/login") # POST nos permite obtener datos enviando datos
+@router.post("/login") # POST nos permite obtener datos enviando datos
 async def login(form: OAuth2PasswordRequestForm = Depends()): # Este parametro es para capturar mediante un formulario los datos que nos envian
     # El form va a venir del Depends que es la dependencia de todo el sistema de autenticacion, si el usuario
     # se autentica correctamente, despues viene la parte de que puede hacer en el sistema (autorizacion).
@@ -91,6 +91,6 @@ async def login(form: OAuth2PasswordRequestForm = Depends()): # Este parametro e
     # Cuando el usuario se autentica correctamente, el sistema debe devolver un access token ya que asi lo define el estandar
     return {"access_token": user.username, "token_type": "bearer"} # El acces_token debe ser algo encriptado que solo conoce el backend para no estar constantemente autenticando al usuario
 
-@app.get("/users/me") # Le pasamos el token de tipo BEARER, si es correcto nos devolvera el json del usuario 
+@router.get("/users/me") # Le pasamos el token de tipo BEARER, si es correcto nos devolvera el json del usuario 
 async def get_user_profile(user: User = Depends(current_user)):
     return user
